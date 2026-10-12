@@ -612,8 +612,8 @@ class _HomePageState extends State<HomePage> {
       );
       if (ok != true) return;
     }
-    final picked = await FilePicker.platform.pickFiles(type: FileType.any);
-    if (picked == null || picked.files.single.path == null) return;
+    final picked = await FilePicker.pickFile(type: FileType.any);
+    if (picked == null || picked.path == null) return;
     if (!mounted) return;
 
     final msg = ValueNotifier<String>('准备中…');
@@ -639,7 +639,7 @@ class _HomePageState extends State<HomePage> {
     );
     String? error;
     try {
-      await importZip(picked.files.single.path!, (s) => msg.value = s);
+      await importZip(picked.path!, (s) => msg.value = s);
     } catch (e, st) {
       error = '$e\n$st';
     }
